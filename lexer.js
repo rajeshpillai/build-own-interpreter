@@ -50,6 +50,16 @@ class Lexer {
             case "}":
                 tok = this.newToken(TokenTypes.RBRACE, this.ch);
                 break;
+
+            default: {
+                if (this.isLetter(this.ch)) {
+                    let ident = this.readIdentifier();
+                    return new Token({Type: "", Literal: ident});
+                } else {
+                    tok = this.newToken(TokenTypes.ILLEGAL, this.ch);
+                }
+                break;
+            }
           
             case 0:
                 tok = this.newToken({Type: TokenTypes.EOF, Literal: ""});
@@ -58,6 +68,22 @@ class Lexer {
 
         this.readChar();
         return tok;
+    }
+
+    isLetter(ch) {
+        return ('a' <= ch && ch <= 'z' || 
+            'A' <= ch && ch <= 'Z' || ch == '_');
+
+    }
+
+    readIdentifier() {
+        let position = this.position;
+        while(this.isLetter(this.ch)) {
+            this.readChar();
+        }
+        let lastPosition = this.position;
+
+       return this.input.substring(position, lastPosition);
     }
 
     newToken(tokenType, ch) {
