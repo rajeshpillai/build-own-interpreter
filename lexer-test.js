@@ -20,8 +20,6 @@ function test_simple_next_token() {
         {[TokenTypes.EOF]: ""},
     ];
 
-    console.log("TOKEN_TYPES: ", tests);
-
     let l = Lexer.New(input);
 
     tests.forEach((t) => {

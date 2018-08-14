@@ -35,6 +35,9 @@ class Lexer {
             case ",":
                 tok = this.newToken(TokenTypes.COMMA, this.ch);
                 break;
+            case "+":
+                tok = this.newToken(TokenTypes.PLUS, this.ch);
+                break;
             case "(":
                 tok = this.newToken(TokenTypes.LPAREN, this.ch);
                 break;
