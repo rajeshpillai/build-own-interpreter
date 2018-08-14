@@ -25,6 +25,9 @@ class Lexer {
 
     nextToken() {
         let tok = null;
+
+        this.skipWhitespace();
+
         switch(this.ch) {
             case "=":
                 tok = this.newToken(TokenTypes.ASSIGN, this.ch);
@@ -54,7 +57,8 @@ class Lexer {
             default: {
                 if (this.isLetter(this.ch)) {
                     let ident = this.readIdentifier();
-                    return new Token({Type: "", Literal: ident});
+                    return new Token({Type: Token.lookupIdent(ident), 
+                        Literal: ident});
                 } else {
                     tok = this.newToken(TokenTypes.ILLEGAL, this.ch);
                 }
@@ -70,10 +74,16 @@ class Lexer {
         return tok;
     }
 
+    skipWhitespace () {
+        let ch = this.ch.trim();
+        while (ch == ' ' || ch =='\t' ||ch=='\n'||ch=='\r') {
+            this.readChar();
+        }    
+    }
+
     isLetter(ch) {
         return ('a' <= ch && ch <= 'z' || 
             'A' <= ch && ch <= 'Z' || ch == '_');
-
     }
 
     readIdentifier() {
