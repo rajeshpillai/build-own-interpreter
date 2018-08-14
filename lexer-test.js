@@ -3,9 +3,9 @@ const Lexer = require('./lexer');
 const TokenTypes = require('./token-types');
 
 
-test_next_token();
+test_simple_next_token();
 
-function test_next_token() {
+function test_simple_next_token() {
     let input = `=+(){},;`;
 
     let tests = [
